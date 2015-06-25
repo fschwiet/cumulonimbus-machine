@@ -68,6 +68,7 @@ Vagrant.configure("2") do |config|
 	installMysql config.vm, mysqlRootPassword	
 
 	config.vm.provision "shell", inline: "sudo apt-get install -y mono-complete" 
+	config.vm.provision "shell", inline: "sudo apt-get install -y supervisor" 
 
 	config.vm.provision "file", destination: "/tmp/cumulonimbus.sudoers", source: "./resources/cumulonimbus.sudoers"
 	config.vm.provision "shell", inline: "visudo -f /tmp/cumulonimbus.sudoers -c"
