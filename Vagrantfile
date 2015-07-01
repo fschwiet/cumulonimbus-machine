@@ -19,20 +19,22 @@ Vagrant.configure("2") do |config|
 	config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
 	megabytesMemoryInstalled = 512
 
-	config.vm.provider :digital_ocean do |provider, override|
-		
-		provider.ssh_key_name = "cumulonimbus-machine fschwiet"
-		override.ssh.private_key_path = digitalOceanPrivateKeyPath
-		
-		override.vm.box = 'digital_ocean'
-		override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+	unless digitalOceanPrivateKeyPath.nil?
+		config.vm.provider :digital_ocean do |provider, override|
+			
+			provider.ssh_key_name = "cumulonimbus-machine fschwiet"
+			override.ssh.private_key_path = digitalOceanPrivateKeyPath
+			
+			override.vm.box = 'digital_ocean'
+			override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-		provider.token = digitalOceanProviderToken
-		provider.image = 'Ubuntu 14.04 x64'
-		provider.region = 'nyc2'
-		provider.size = '512mb'
+			provider.token = digitalOceanProviderToken
+			provider.image = 'Ubuntu 14.04 x64'
+			provider.region = 'nyc2'
+			provider.size = '512mb'
+		end
 	end
-
+	
 	config.omnibus.chef_version = "11.18"
 
 	config.vm.network "private_network", ip: "192.168.33.100"
