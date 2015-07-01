@@ -2,8 +2,6 @@
 # vi: set ft=ruby :
 
 syncedFolder = File.absolute_path(ENV["SyncedFolder"] || "..")
-hostGitUrl = ENV["HostGitUrl"] || "https://github.com/fschwiet/cumulonimbus-host"
-hostGitCommit = ENV["HostGitCommit"] || "master"
 wwwuser = ENV["wwwuserUsername"] || "wwwuser"
 wwwuserPassword = ENV["wwwuserPassword"] || "password"
 mysqlRootPassword = ENV["mysqlRootPassword"] || ""
