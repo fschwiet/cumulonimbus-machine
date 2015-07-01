@@ -5,6 +5,12 @@ syncedFolder = File.absolute_path(ENV["SyncedFolder"] || "..")
 wwwuser = ENV["wwwuserUsername"] || "wwwuser"
 wwwuserPassword = ENV["wwwuserPassword"] || "password"
 
+#  vagrantServerName is set for digitalocean to allow selection
+#  of a particular droplet.  On migration to a new droplet, you
+#  need to change this.
+
+vagrantHostName = ENV["vagrantHostName"] || "default"
+
 require "./util.rb"
 
 
@@ -51,6 +57,7 @@ Vagrant.configure("2") do |config|
 		wwwuserPassword
 	]
 
+	config.vm.define vagrantHostName
 end
 
 
