@@ -9,6 +9,12 @@ mysqlRootPassword = ENV["mysqlRootPassword"] || ""
 digitalOceanPrivateKeyPath = ENV["digitalOceanPrivateKeyPath"] || nil #  /path/id_rsa
 digitalOceanProviderToken = ENV["digitalOceanProviderToken"] || nil
 
+#  vagrantServerName is set for digitalocean to allow selection
+#  of a particular droplet.  On migration to a new droplet, you
+#  need to change this.
+
+vagrantHostName = ENV["vagrantHostName"] || "default"
+
 require "./util.rb"
 require "./fschwiet.rb"
 
@@ -81,6 +87,7 @@ Vagrant.configure("2") do |config|
 		wwwuserPassword
 	]
 
+	config.vm.define vagrantHostName
 end
 
 
