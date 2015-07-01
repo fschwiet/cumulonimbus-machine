@@ -3,7 +3,7 @@
 for directory in ./deploys/*; do
    	if [ -d "$directory/current" ]; then
 		pushd $directory/current; 
-		./run.sh
+		./cumulonimbus/run.sh
         popd
   	fi
 done

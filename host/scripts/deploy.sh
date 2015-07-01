@@ -46,15 +46,15 @@ then
 fi
 
 
-if ! [ -s $src_to_deploy/prerun.sh -o -s $config_to_deploy/prerun.sh ]
+if ! [ -s $src_to_deploy/cumulonimbus/prerun.sh -o -s $config_to_deploy/cumulonimbus/prerun.sh ]
 then
-	echo "Expected to find file $src_to_deploy/prerun.sh or $config_to_deploy/prerun.sh"
+	echo "Expected to find file $src_to_deploy/cumulonimbus/prerun.sh or $config_to_deploy/cumulonimbus/prerun.sh"
 	exit 1
 fi
 
-if ! [ -s $src_to_deploy/run.sh -o  -s $config_to_deploy/run.sh ]
+if ! [ -s $src_to_deploy/cumulonimbus/run.sh -o  -s $config_to_deploy/cumulonimbus/run.sh ]
 then
-	echo "Expected to find file $src_to_deploy/run.sh or $config_to_deploy/run.sh"
+	echo "Expected to find file $src_to_deploy/cumulonimbus/run.sh or $config_to_deploy/cumulonimbus/run.sh"
 	exit 1
 fi
 
@@ -92,10 +92,10 @@ then
 	exit 1
 fi
 
-	if ! ./prerun.sh
+	if ! ./cumulonimbus/prerun.sh
 	then
 		popd > /dev/null
-		echo "Failure running $deploy_target/prerun.sh"
+		echo "Failure running $deploy_target/cumulonimbus/prerun.sh"
 		exit 1
 	fi
 
@@ -119,11 +119,11 @@ fi
 
 pushd $deploy_link
 	
-	if ! $deploy_target/run.sh
+	if ! $deploy_target/cumulonimbus/run.sh
 	then
 		popd > /dev/null
 
-		echo "Failure running $deploy_target/run.sh"
+		echo "Failure running $deploy_target/cumulonimbus/run.sh"
 
 		if [ -n $old_deploy_target ]
 		then

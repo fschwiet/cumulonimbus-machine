@@ -78,9 +78,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.provision "shell", path: "./scripts/install-cumulonimbus.sh", args: [ 
 		wwwuser, 
-		wwwuserPassword,
-		hostGitUrl,
-		hostGitCommit
+		wwwuserPassword
 	]
 
 end
