@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-syncedFolder = File.absolute_path(ENV["SyncedFolder"] || "..")
+syncedFolder = ENV["SyncedFolder"] || nil
 wwwuser = ENV["wwwuserUsername"] || "wwwuser"
 wwwuserPassword = ENV["wwwuserPassword"] || "password"
 
@@ -23,7 +23,11 @@ Vagrant.configure("2") do |config|
 	config.omnibus.chef_version = "11.18"
 
 	config.vm.network "private_network", ip: "192.168.33.100"
-	config.vm.synced_folder syncedFolder, "/vagrant"
+	
+	unless syncedFolder.nil?
+		config.vm.synced_folder File.absolute_path(syncedFolder), "/vagrant"
+	end
+
 	config.vm.synced_folder ".", "/vagrant2"
 
 	enableFirewall config.vm, [
