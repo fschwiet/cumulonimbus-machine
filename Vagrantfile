@@ -26,6 +26,8 @@ Vagrant.configure("2") do |config|
 	
 	unless syncedFolder.nil?
 		config.vm.synced_folder File.absolute_path(syncedFolder), "/vagrant"
+	else
+		config.vm.synced_folder ".", "/vagrant", disabled: true
 	end
 
 	config.vm.provision "file", source: './host/', destination: '/tmp/cumulonimbus/host/'
