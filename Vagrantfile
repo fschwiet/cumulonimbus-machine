@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
 		config.vm.synced_folder File.absolute_path(syncedFolder), "/vagrant"
 	end
 
-	config.vm.synced_folder ".", "/vagrant2"
+	config.vm.provision "file", source: './host/', destination: '/tmp/cumulonimbus/host/'
 
 	enableFirewall config.vm, [
 		"21/tcp",    #ftp, used by wget during some provisioning
