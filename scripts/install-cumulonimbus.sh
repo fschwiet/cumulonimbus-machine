@@ -6,11 +6,12 @@ username=${1:?"Expected web app username as first parameter."}
 password=${2:?"Expected web app password as second parameter."}
 
 sudo useradd -m -c "Web Applications Account" -p $(openssl passwd -1 "$password") "$username"
-sudo mkdir /cumulonimbus
-sudo mkdir /cumulonimbus/sites
-sudo mkdir /cumulonimbus/configs
-sudo cp -r /vagrant2/host/* /cumulonimbus/
+sudo mkdir -p /cumulonimbus
+sudo mkdir -p /cumulonimbus/sites
+sudo mkdir -p /cumulonimbus/configs
+sudo cp -r /tmp/cumulonimbus/host/* /cumulonimbus/
 sudo chown --recursive "$username:$username" /cumulonimbus
+sudo find /cumulonimbus -name "*.sh" -exec chmod ug+x {} \;
 
 echo '@reboot wwwuser PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash -c "cd /cumulonimbus; ./scripts/run-on-reboot.sh >>~/cronrun_cumulonimbus 2>&1"' | sudo tee /etc/cron.d/cumulonimbus > /dev/null
 

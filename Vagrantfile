@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-syncedFolder = File.absolute_path(ENV["SyncedFolder"] || "..")
+syncedFolder = ENV["SyncedFolder"] || nil
 wwwuser = ENV["wwwuserUsername"] || "wwwuser"
 wwwuserPassword = ENV["wwwuserPassword"] || "password"
 mysqlRootPassword = ENV["mysqlRootPassword"] || ""
@@ -44,8 +44,22 @@ Vagrant.configure("2") do |config|
 	config.omnibus.chef_version = "11.18"
 
 	config.vm.network "private_network", ip: "192.168.33.100"
-	config.vm.synced_folder syncedFolder, "/vagrant"
-	config.vm.synced_folder ".", "/vagrant2"
+	
+	unless syncedFolder.nil?
+		config.vm.synced_folder File.absolute_path(syncedFolder), "/vagrant"
+	else
+		config.vm.synced_folder ".", "/vagrant", disabled: true
+	end
+
+	config.vm.provision "file", source: './host/', destination: '/tmp/cumulonimbus/host/'
+
+	#  Copying the cookbooks since I couldn't get rsync to run on digitalocean.
+	#  Only take the first result, because if rsync did succeed and its already copied
+	#  then there are other cookbooks subfolders.
+
+	config.vm.provision "file", source: './cookbooks/', destination: '/tmp/cumulonimbus/cookbooks/'
+	config.vm.provision "shell", inline: 
+		'cp -r /tmp/cumulonimbus/cookbooks/* $(find /tmp/vagrant-chef -name cookbooks | head --lines 1)'
 
 	enableFirewall config.vm, [
 		"3306/tcp",  #mysql
