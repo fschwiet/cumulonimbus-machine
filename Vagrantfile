@@ -32,6 +32,14 @@ Vagrant.configure("2") do |config|
 
 	config.vm.provision "file", source: './host/', destination: '/tmp/cumulonimbus/host/'
 
+	#  Copying the cookbooks since I couldn't get rsync to run on digitalocean.
+	#  Only take the first result, because if rsync did succeed and its already copied
+	#  then there are other cookbooks subfolders.
+
+	config.vm.provision "file", source: './cookbooks/', destination: '/tmp/cumulonimbus/cookbooks/'
+	config.vm.provision "shell", inline: 
+		'cp -r /tmp/cumulonimbus/cookbooks/* $(find /tmp/vagrant-chef -name cookbooks | head --lines 1)'
+
 	enableFirewall config.vm, [
 		"21/tcp",    #ftp, used by wget during some provisioning
 		"22/tcp"     #ssh
