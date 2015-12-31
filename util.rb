@@ -97,13 +97,7 @@ end
 def installNginx(vm)
 	vm.provision :chef_solo do |chef|
 		chef.cookbooks_path = "cookbooks"
-		chef.add_recipe "nginx"
-
-		chef.json = {
-			:nginx => {
-				install_method: "source"
-			}
-		}
+		chef.add_recipe "mynginx"
 	end
 end
 

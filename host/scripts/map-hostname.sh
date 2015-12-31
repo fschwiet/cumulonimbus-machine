@@ -18,7 +18,6 @@ server {
     location ~ ^/ {
         proxy_pass http://${outgoingHost}:${outgoingPort};
 
-        proxy_http_version 1.1;
         proxy_set_header Host \$host;
 	}
 }
