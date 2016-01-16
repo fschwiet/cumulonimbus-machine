@@ -87,7 +87,13 @@ Vagrant.configure("2") do |config|
 
 	installMysql config.vm, mysqlRootPassword	
 
+	# package ca-certificates-mono is called out in some mono docs but is not really available,
+	# and seems to no longer be necessary
+	# config.vm.provision "shell", inline: "sudo apt-get install -y ca-certificates-mono"
+	
 	config.vm.provision "shell", inline: "sudo apt-get install -y mono-complete" 
+	config.vm.provision "shell", inline: "mozroots --import --ask-remove" 
+	
 	config.vm.provision "shell", inline: "sudo apt-get install -y supervisor" 
 
 	config.vm.provision "file", destination: "/tmp/cumulonimbus.sudoers", source: "./resources/cumulonimbus.sudoers"
