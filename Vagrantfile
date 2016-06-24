@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
 	# config.vm.provision "shell", inline: "sudo apt-get install -y ca-certificates-mono"
 	
 	config.vm.provision "shell", inline: "sudo apt-get install -y mono-complete" 
-	config.vm.provision "shell", inline: "mozroots --import --ask-remove" 
+	config.vm.provision "shell", inline: "mozroots --import --sync" 
 	
 	config.vm.provision "shell", inline: "sudo apt-get install -y supervisor" 
 
